@@ -8,6 +8,7 @@
 
 bool vmCanStop(void *machine, void *queue)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         __block BOOL result;
         dispatch_sync((dispatch_queue_t)queue, ^{
@@ -15,12 +16,13 @@ bool vmCanStop(void *machine, void *queue)
         });
         return (bool)result;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 void stopWithCompletionHandler(void *machine, void *queue, void *completionHandler)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         vm_completion_handler_t handler = makeVMCompletionHandler(completionHandler);
         dispatch_sync((dispatch_queue_t)queue, ^{
@@ -29,7 +31,7 @@ void stopWithCompletionHandler(void *machine, void *queue, void *completionHandl
         Block_release(handler);
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -38,10 +40,11 @@ void stopWithCompletionHandler(void *machine, void *queue, void *completionHandl
 */
 void *newVZGenericPlatformConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZGenericPlatformConfiguration alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -51,11 +54,12 @@ void *newVZGenericPlatformConfiguration()
  */
 void setDirectorySharingDevicesVZVirtualMachineConfiguration(void *config, void *directorySharingDevices)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZVirtualMachineConfiguration *)config setDirectorySharingDevices:[(NSMutableArray *)directorySharingDevices copy]];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -66,11 +70,12 @@ void setDirectorySharingDevicesVZVirtualMachineConfiguration(void *config, void 
  */
 void setPlatformVZVirtualMachineConfiguration(void *config, void *platform)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZVirtualMachineConfiguration *)config setPlatform:(VZPlatformConfiguration *)platform];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -80,11 +85,12 @@ void setPlatformVZVirtualMachineConfiguration(void *config, void *platform)
  */
 void setGraphicsDevicesVZVirtualMachineConfiguration(void *config, void *graphicsDevices)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZVirtualMachineConfiguration *)config setGraphicsDevices:[(NSMutableArray *)graphicsDevices copy]];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -94,11 +100,12 @@ void setGraphicsDevicesVZVirtualMachineConfiguration(void *config, void *graphic
  */
 void setPointingDevicesVZVirtualMachineConfiguration(void *config, void *pointingDevices)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZVirtualMachineConfiguration *)config setPointingDevices:[(NSMutableArray *)pointingDevices copy]];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -108,11 +115,12 @@ void setPointingDevicesVZVirtualMachineConfiguration(void *config, void *pointin
  */
 void setKeyboardsVZVirtualMachineConfiguration(void *config, void *keyboards)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZVirtualMachineConfiguration *)config setKeyboards:[(NSMutableArray *)keyboards copy]];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -122,11 +130,12 @@ void setKeyboardsVZVirtualMachineConfiguration(void *config, void *keyboards)
  */
 void setAudioDevicesVZVirtualMachineConfiguration(void *config, void *audioDevices)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZVirtualMachineConfiguration *)config setAudioDevices:[(NSMutableArray *)audioDevices copy]];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -136,10 +145,11 @@ void setAudioDevicesVZVirtualMachineConfiguration(void *config, void *audioDevic
  */
 void *newVZVirtioSoundDeviceConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZVirtioSoundDeviceConfiguration alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -148,11 +158,12 @@ void *newVZVirtioSoundDeviceConfiguration()
 */
 void setStreamsVZVirtioSoundDeviceConfiguration(void *audioDeviceConfiguration, void *streams)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZVirtioSoundDeviceConfiguration *)audioDeviceConfiguration setStreams:[(NSMutableArray *)streams copy]];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -162,10 +173,11 @@ void setStreamsVZVirtioSoundDeviceConfiguration(void *audioDeviceConfiguration, 
  */
 void *newVZVirtioSoundDeviceInputStreamConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZVirtioSoundDeviceInputStreamConfiguration alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -174,12 +186,13 @@ void *newVZVirtioSoundDeviceInputStreamConfiguration()
  */
 void *newVZVirtioSoundDeviceHostInputStreamConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZVirtioSoundDeviceInputStreamConfiguration *inputStream = (VZVirtioSoundDeviceInputStreamConfiguration *)newVZVirtioSoundDeviceInputStreamConfiguration();
         [inputStream setSource:[[VZHostAudioInputStreamSource alloc] init]];
         return inputStream;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -189,10 +202,11 @@ void *newVZVirtioSoundDeviceHostInputStreamConfiguration()
  */
 void *newVZVirtioSoundDeviceOutputStreamConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZVirtioSoundDeviceOutputStreamConfiguration alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -201,12 +215,13 @@ void *newVZVirtioSoundDeviceOutputStreamConfiguration()
  */
 void *newVZVirtioSoundDeviceHostOutputStreamConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZVirtioSoundDeviceOutputStreamConfiguration *outputStream = (VZVirtioSoundDeviceOutputStreamConfiguration *)newVZVirtioSoundDeviceOutputStreamConfiguration();
         [outputStream setSink:[[VZHostAudioOutputStreamSink alloc] init]];
         return outputStream;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -221,6 +236,7 @@ void *newVZVirtioSoundDeviceHostOutputStreamConfiguration()
  */
 void *newVZDiskImageStorageDeviceAttachmentWithCacheAndSyncMode(const char *diskPath, bool readOnly, int cacheMode, int syncMode, void **error)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         NSString *diskPathNSString = [NSString stringWithUTF8String:diskPath];
         NSURL *diskURL = [NSURL fileURLWithPath:diskPathNSString];
@@ -231,7 +247,7 @@ void *newVZDiskImageStorageDeviceAttachmentWithCacheAndSyncMode(const char *disk
             synchronizationMode:(VZDiskImageSynchronizationMode)syncMode
                           error:(NSError *_Nullable *_Nullable)error];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -245,12 +261,13 @@ void *newVZDiskImageStorageDeviceAttachmentWithCacheAndSyncMode(const char *disk
  */
 void *newVZSharedDirectory(const char *dirPath, bool readOnly)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         NSString *dirPathNSString = [NSString stringWithUTF8String:dirPath];
         NSURL *dirURL = [NSURL fileURLWithPath:dirPathNSString];
         return [[VZSharedDirectory alloc] initWithURL:dirURL readOnly:(BOOL)readOnly];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -262,10 +279,11 @@ void *newVZSharedDirectory(const char *dirPath, bool readOnly)
  */
 void *newVZSingleDirectoryShare(void *sharedDirectory)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZSingleDirectoryShare alloc] initWithDirectory:(VZSharedDirectory *)sharedDirectory];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -277,10 +295,11 @@ void *newVZSingleDirectoryShare(void *sharedDirectory)
  */
 void *newVZMultipleDirectoryShare(void *sharedDirectories)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZMultipleDirectoryShare alloc] initWithDirectories:(NSDictionary<NSString *, VZSharedDirectory *> *)sharedDirectories];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -292,6 +311,7 @@ void *newVZMultipleDirectoryShare(void *sharedDirectories)
  */
 void *newVZVirtioFileSystemDeviceConfiguration(const char *tag, void **error)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         NSString *tagNSString = [NSString stringWithUTF8String:tag];
         BOOL valid = [VZVirtioFileSystemDeviceConfiguration validateTag:tagNSString error:(NSError *_Nullable *_Nullable)error];
@@ -300,7 +320,7 @@ void *newVZVirtioFileSystemDeviceConfiguration(const char *tag, void **error)
         }
         return [[VZVirtioFileSystemDeviceConfiguration alloc] initWithTag:tagNSString];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -309,11 +329,12 @@ void *newVZVirtioFileSystemDeviceConfiguration(const char *tag, void **error)
  */
 void setVZVirtioFileSystemDeviceConfigurationShare(void *config, void *share)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZVirtioFileSystemDeviceConfiguration *)config setShare:(VZDirectoryShare *)share];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -323,10 +344,11 @@ void setVZVirtioFileSystemDeviceConfigurationShare(void *config, void *share)
  */
 void *newVZUSBScreenCoordinatePointingDeviceConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZUSBScreenCoordinatePointingDeviceConfiguration alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -336,10 +358,11 @@ void *newVZUSBScreenCoordinatePointingDeviceConfiguration()
  */
 void *newVZUSBKeyboardConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZUSBKeyboardConfiguration alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -348,6 +371,7 @@ void startVirtualMachineWindow(void *machine, double width, double height)
     // Create a shared app instance.
     // This will initialize the global variable
     // 'NSApp' with the application instance.
+#ifdef INCLUDE_TARGET_OSX_12
     [VZApplication sharedApplication];
     if (@available(macOS 12, *)) {
         @autoreleasepool {
@@ -361,5 +385,6 @@ void startVirtualMachineWindow(void *machine, double width, double height)
             return;
         }
     }
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }

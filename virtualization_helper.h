@@ -18,6 +18,13 @@ NSDictionary *dumpProcessinfo();
         __builtin_unreachable();                              \
     } while (0)
 
+// for macOS 12 API
+#if __MAC_OS_X_VERSION_MAX_ALLOWED >= 120000
+#define INCLUDE_TARGET_OSX_12 1
+#else
+#pragma message("macOS 12 API has been disabled")
+#endif
+
 // for macOS 12.3 API
 #if __MAC_OS_X_VERSION_MAX_ALLOWED >= 120300
 #define INCLUDE_TARGET_OSX_12_3 1

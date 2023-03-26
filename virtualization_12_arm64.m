@@ -30,6 +30,7 @@
  */
 void *newVZMacAuxiliaryStorageWithCreating(const char *storagePath, void *hardwareModel, void **error)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         NSString *storagePathNSString = [NSString stringWithUTF8String:storagePath];
         NSURL *storageURL = [NSURL fileURLWithPath:storagePathNSString];
@@ -38,7 +39,7 @@ void *newVZMacAuxiliaryStorageWithCreating(const char *storagePath, void *hardwa
                                                                options:VZMacAuxiliaryStorageInitializationOptionAllowOverwrite
                                                                  error:(NSError *_Nullable *_Nullable)error];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -49,6 +50,7 @@ void *newVZMacAuxiliaryStorageWithCreating(const char *storagePath, void *hardwa
  */
 void *newVZMacAuxiliaryStorage(const char *storagePath)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         NSString *storagePathNSString = [NSString stringWithUTF8String:storagePath];
         NSURL *storageURL = [NSURL fileURLWithPath:storagePathNSString];
@@ -56,7 +58,7 @@ void *newVZMacAuxiliaryStorage(const char *storagePath)
         // https://developer.apple.com/documentation/virtualization/vzmacauxiliarystorage?language=objc
         return [[VZMacAuxiliaryStorage alloc] initWithContentsOfURL:storageURL];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -80,10 +82,11 @@ void *newVZMacAuxiliaryStorage(const char *storagePath)
 */
 void *newVZMacPlatformConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZMacPlatformConfiguration alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -92,17 +95,19 @@ void *newVZMacPlatformConfiguration()
  */
 void setHardwareModelVZMacPlatformConfiguration(void *config, void *hardwareModel)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZMacPlatformConfiguration *)config setHardwareModel:(VZMacHardwareModel *)hardwareModel];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 // Store the hardware model to disk so that we can retrieve them for subsequent boots.
 void storeHardwareModelDataVZMacPlatformConfiguration(void *config, const char *filePath)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacPlatformConfiguration *macPlatformConfiguration = (VZMacPlatformConfiguration *)config;
         NSString *filePathNSString = [NSString stringWithUTF8String:filePath];
@@ -110,7 +115,7 @@ void storeHardwareModelDataVZMacPlatformConfiguration(void *config, const char *
         [macPlatformConfiguration.hardwareModel.dataRepresentation writeToURL:fileURL atomically:YES];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -121,17 +126,19 @@ void storeHardwareModelDataVZMacPlatformConfiguration(void *config, const char *
  */
 void setMachineIdentifierVZMacPlatformConfiguration(void *config, void *machineIdentifier)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZMacPlatformConfiguration *)config setMachineIdentifier:(VZMacMachineIdentifier *)machineIdentifier];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 // Store the machine identifier to disk so that we can retrieve them for subsequent boots.
 void storeMachineIdentifierDataVZMacPlatformConfiguration(void *config, const char *filePath)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacPlatformConfiguration *macPlatformConfiguration = (VZMacPlatformConfiguration *)config;
         NSString *filePathNSString = [NSString stringWithUTF8String:filePath];
@@ -139,7 +146,7 @@ void storeMachineIdentifierDataVZMacPlatformConfiguration(void *config, const ch
         [macPlatformConfiguration.machineIdentifier.dataRepresentation writeToURL:fileURL atomically:YES];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -151,11 +158,12 @@ void storeMachineIdentifierDataVZMacPlatformConfiguration(void *config, const ch
  */
 void setAuxiliaryStorageVZMacPlatformConfiguration(void *config, void *auxiliaryStorage)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZMacPlatformConfiguration *)config setAuxiliaryStorage:(VZMacAuxiliaryStorage *)auxiliaryStorage];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -169,10 +177,11 @@ void setAuxiliaryStorageVZMacPlatformConfiguration(void *config, void *auxiliary
 */
 void *newVZMacOSBootLoader()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZMacOSBootLoader alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -182,10 +191,11 @@ void *newVZMacOSBootLoader()
 */
 void *newVZMacGraphicsDeviceConfiguration()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZMacGraphicsDeviceConfiguration alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -194,11 +204,12 @@ void *newVZMacGraphicsDeviceConfiguration()
 */
 void setDisplaysVZMacGraphicsDeviceConfiguration(void *graphicsConfiguration, void *displays)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZMacGraphicsDeviceConfiguration *)graphicsConfiguration setDisplays:[(NSMutableArray *)displays copy]];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -210,13 +221,14 @@ void setDisplaysVZMacGraphicsDeviceConfiguration(void *graphicsConfiguration, vo
 */
 void *newVZMacGraphicsDisplayConfiguration(NSInteger widthInPixels, NSInteger heightInPixels, NSInteger pixelsPerInch)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZMacGraphicsDisplayConfiguration alloc]
             initWithWidthInPixels:widthInPixels
                    heightInPixels:heightInPixels
                     pixelsPerInch:pixelsPerInch];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -226,6 +238,7 @@ void *newVZMacGraphicsDisplayConfiguration(NSInteger widthInPixels, NSInteger he
  */
 void *newVZMacHardwareModelWithPath(const char *hardwareModelPath)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacHardwareModel *hardwareModel;
         NSString *hardwareModelPathNSString = [NSString stringWithUTF8String:hardwareModelPath];
@@ -236,12 +249,13 @@ void *newVZMacHardwareModelWithPath(const char *hardwareModelPath)
         }
         return hardwareModel;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 void *newVZMacHardwareModelWithBytes(void *hardwareModelBytes, int len)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacHardwareModel *hardwareModel;
         @autoreleasepool {
@@ -250,7 +264,7 @@ void *newVZMacHardwareModelWithBytes(void *hardwareModelBytes, int len)
         }
         return hardwareModel;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -259,10 +273,11 @@ void *newVZMacHardwareModelWithBytes(void *hardwareModelBytes, int len)
  */
 void *newVZMacMachineIdentifier()
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[VZMacMachineIdentifier alloc] init];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -274,6 +289,7 @@ void *newVZMacMachineIdentifier()
  */
 void *newVZMacMachineIdentifierWithPath(const char *machineIdentifierPath)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacMachineIdentifier *machineIdentifier;
         NSString *machineIdentifierPathNSString = [NSString stringWithUTF8String:machineIdentifierPath];
@@ -284,12 +300,13 @@ void *newVZMacMachineIdentifierWithPath(const char *machineIdentifierPath)
         }
         return machineIdentifier;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 void *newVZMacMachineIdentifierWithBytes(void *machineIdentifierBytes, int len)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacMachineIdentifier *machineIdentifier;
         @autoreleasepool {
@@ -298,12 +315,13 @@ void *newVZMacMachineIdentifierWithBytes(void *machineIdentifierBytes, int len)
         }
         return machineIdentifier;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 nbyteslice getVZMacMachineIdentifierDataRepresentation(void *machineIdentifierPtr)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacMachineIdentifier *machineIdentifier = (VZMacMachineIdentifier *)machineIdentifierPtr;
         NSData *data = [machineIdentifier dataRepresentation];
@@ -313,12 +331,13 @@ nbyteslice getVZMacMachineIdentifierDataRepresentation(void *machineIdentifierPt
         };
         return ret;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 VZMacOSRestoreImageStruct convertVZMacOSRestoreImage2Struct(void *restoreImagePtr)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacOSRestoreImage *restoreImage = (VZMacOSRestoreImage *)restoreImagePtr;
         VZMacOSRestoreImageStruct ret;
@@ -329,12 +348,13 @@ VZMacOSRestoreImageStruct convertVZMacOSRestoreImage2Struct(void *restoreImagePt
         ret.mostFeaturefulSupportedConfiguration = (void *)CFBridgingRetain([restoreImage mostFeaturefulSupportedConfiguration]);
         return ret;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 void fetchLatestSupportedMacOSRestoreImageWithCompletionHandler(void *cgoHandler)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [VZMacOSRestoreImage fetchLatestSupportedWithCompletionHandler:^(VZMacOSRestoreImage *restoreImage, NSError *error) {
             VZMacOSRestoreImageStruct restoreImageStruct = convertVZMacOSRestoreImage2Struct(restoreImage);
@@ -342,12 +362,13 @@ void fetchLatestSupportedMacOSRestoreImageWithCompletionHandler(void *cgoHandler
         }];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 void loadMacOSRestoreImageFile(const char *ipswPath, void *cgoHandler)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         NSString *ipswPathNSString = [NSString stringWithUTF8String:ipswPath];
         NSURL *ipswURL = [NSURL fileURLWithPath:ipswPathNSString];
@@ -358,12 +379,13 @@ void loadMacOSRestoreImageFile(const char *ipswPath, void *cgoHandler)
                        }];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 VZMacOSConfigurationRequirementsStruct convertVZMacOSConfigurationRequirements2Struct(void *requirementsPtr)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacOSConfigurationRequirements *requirements = (VZMacOSConfigurationRequirements *)requirementsPtr;
         VZMacOSConfigurationRequirementsStruct ret;
@@ -373,12 +395,13 @@ VZMacOSConfigurationRequirementsStruct convertVZMacOSConfigurationRequirements2S
         ret.hardwareModel = (void *)CFBridgingRetain([requirements hardwareModel]);
         return ret;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 VZMacHardwareModelStruct convertVZMacHardwareModel2Struct(void *hardwareModelPtr)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacHardwareModel *hardwareModel = (VZMacHardwareModel *)hardwareModelPtr;
         VZMacHardwareModelStruct ret;
@@ -391,7 +414,7 @@ VZMacHardwareModelStruct convertVZMacHardwareModel2Struct(void *hardwareModelPtr
         ret.dataRepresentation = retByteSlice;
         return ret;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -405,6 +428,7 @@ VZMacHardwareModelStruct convertVZMacHardwareModel2Struct(void *hardwareModelPtr
  */
 void *newVZMacOSInstaller(void *virtualMachine, void *vmQueue, const char *restoreImageFilePath)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         __block VZMacOSInstaller *ret;
         NSString *restoreImageFilePathNSString = [NSString stringWithUTF8String:restoreImageFilePath];
@@ -414,7 +438,7 @@ void *newVZMacOSInstaller(void *virtualMachine, void *vmQueue, const char *resto
         });
         return ret;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -425,6 +449,7 @@ void *newProgressObserverVZMacOSInstaller()
 
 void installByVZMacOSInstaller(void *installerPtr, void *vmQueue, void *progressObserverPtr, void *completionHandler, void *fractionCompletedHandler)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacOSInstaller *installer = (VZMacOSInstaller *)installerPtr;
         dispatch_sync((dispatch_queue_t)vmQueue, ^{
@@ -439,12 +464,13 @@ void installByVZMacOSInstaller(void *installerPtr, void *vmQueue, void *progress
         });
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
 void cancelInstallVZMacOSInstaller(void *installerPtr)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         VZMacOSInstaller *installer = (VZMacOSInstaller *)installerPtr;
         if (installer.progress.cancellable) {
@@ -452,7 +478,7 @@ void cancelInstallVZMacOSInstaller(void *installerPtr)
         }
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 

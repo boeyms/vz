@@ -12,10 +12,11 @@
 */
 void *newVZGDBDebugStubConfiguration(uint32_t port)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         return [[_VZGDBDebugStubConfiguration alloc] initWithPort:(NSInteger)port];
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }
 
@@ -24,10 +25,11 @@ void *newVZGDBDebugStubConfiguration(uint32_t port)
 */
 void setDebugStubVZVirtualMachineConfiguration(void *config, void *debugStub)
 {
+#ifdef INCLUDE_TARGET_OSX_12
     if (@available(macOS 12, *)) {
         [(VZVirtualMachineConfiguration *)config _setDebugStub:(_VZDebugStubConfiguration *)debugStub];
         return;
     }
-
+#endif
     RAISE_UNSUPPORTED_MACOS_EXCEPTION();
 }

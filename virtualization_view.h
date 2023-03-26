@@ -23,9 +23,11 @@
 - (instancetype)init;
 @end
 
+#ifdef INCLUDE_TARGET_OSX_12
 API_AVAILABLE(macos(12.0))
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, VZVirtualMachineDelegate>
 - (instancetype)initWithVirtualMachine:(VZVirtualMachine *)virtualMachine
                            windowWidth:(CGFloat)windowWidth
                           windowHeight:(CGFloat)windowHeight;
 @end
+#endif

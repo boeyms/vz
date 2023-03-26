@@ -165,6 +165,7 @@
 
 @end
 
+#ifdef INCLUDE_TARGET_OSX_12
 @implementation AppDelegate {
     VZVirtualMachine *_virtualMachine;
     VZVirtualMachineView *_virtualMachineView;
@@ -372,3 +373,4 @@
     [aboutPanel makeKeyAndOrderFront:nil];
 }
 @end
+#endif
